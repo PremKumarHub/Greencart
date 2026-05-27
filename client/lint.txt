@@ -1,0 +1,36 @@
+﻿
+> client@0.0.0 lint
+> eslint .
+
+
+C:\Users\Prem\OneDrive\Desktop\Groceryatnxtdoor\client\src\Pages\Cart.jsx
+    7:59  error    'getCartCount' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                no-unused-vars
+    9:22  error    'setAddresses' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                no-unused-vars
+   23:11  error    'placeOrder' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                  no-unused-vars
+   30:8   warning  React Hook useEffect has a missing dependency: 'getCart'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  102:56  error    'index' is defined but never used                                                                           no-unused-vars
+
+C:\Users\Prem\OneDrive\Desktop\Groceryatnxtdoor\client\src\Pages\MyOrders.jsx
+  32:35  error  'itemIndex' is defined but never used  no-unused-vars
+
+C:\Users\Prem\OneDrive\Desktop\Groceryatnxtdoor\client\src\Pages\ProductDetails.jsx
+  22:4  warning  React Hook useEffect has a missing dependency: 'product.category'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Users\Prem\OneDrive\Desktop\Groceryatnxtdoor\client\src\Pages\seller\AddProduct.jsx
+  2:18  error  'categories' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+C:\Users\Prem\OneDrive\Desktop\Groceryatnxtdoor\client\src\Pages\seller\SellerLayout.jsx
+  18:17  error  'toast' is not defined  no-undef
+  21:17  error  'toast' is not defined  no-undef
+  26:13  error  'toast' is not defined  no-undef
+
+C:\Users\Prem\OneDrive\Desktop\Groceryatnxtdoor\client\src\components\Navbar.jsx
+  33:8  warning  React Hook useEffect has a missing dependency: 'navigate'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Users\Prem\OneDrive\Desktop\Groceryatnxtdoor\client\src\context\AppContex.jsx
+    3:10  error  'dummyProducts' is defined but never used. Allowed unused vars must match /^[A-Z_]/u                                            no-unused-vars
+   10:14  error  Fast refresh only works when a file only exports components. Move your React context(s) to a separate file                      react-refresh/only-export-components
+  160:14  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+Γ£û 15 problems (12 errors, 3 warnings)
+
