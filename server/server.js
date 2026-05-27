@@ -13,16 +13,16 @@ import orderRouter from "./routes/orderRoute.js";
 
 const app = express();
 
-// Connect to DB and Cloudinary (non-blocking — don't crash on init failure)
 connectDB();
 connectCloudinary();
 
+// Updated flexible allowed origins
 const allowedOrigins = [
     'http://localhost:5173',
     'http://localhost:5174',
     'https://greencart-gamma-brown.vercel.app',
-    process.env.FRONTEND_URL,  // Add your Vercel frontend URL in env vars
-].filter(Boolean);
+    'https://greencart-dun-tau.vercel.app', // Your current active client link
+];
 
 // Middleware
 app.use((req, res, next) => {
@@ -34,11 +34,27 @@ app.use((req, res, next) => {
 });
 
 app.use(cookieParser());
+
+// 1. Explicitly intercept and respond to browser Pre-flight OPTIONS checks first!
+app.options('*', (req, res) => {
+    const origin = req.headers.origin;
+    // Automatically match ANY vercel deployment URL of yours or your local servers
+    if (origin && (allowedOrigins.includes(origin) || origin.includes('vercel.app'))) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS,PATCH');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    return res.sendStatus(204); // Instant clean response for the browser pre-flight check
+});
+
+// 2. Updated dynamic CORS configuration
 app.use(cors({
     origin: function (origin, callback) {
-        // Allow requests with no origin (like mobile apps, Postman, curl)
         if (!origin) return callback(null, true);
-        if (allowedOrigins.includes(origin)) {
+
+        // Dynamically allow if it matches the explicit list OR contains vercel.app
+        if (allowedOrigins.includes(origin) || origin.includes('vercel.app')) {
             return callback(null, true);
         }
         return callback(new Error('Not allowed by CORS'));
