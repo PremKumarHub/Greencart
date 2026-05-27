@@ -20,6 +20,7 @@ connectCloudinary();
 const allowedOrigins = [
     'http://localhost:5173',
     'http://localhost:5174',
+    'https://greencart-gamma-brown.vercel.app',
     process.env.FRONTEND_URL,  // Add your Vercel frontend URL in env vars
 ].filter(Boolean);
 
