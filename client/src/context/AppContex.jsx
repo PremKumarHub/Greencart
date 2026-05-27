@@ -164,7 +164,6 @@ export const AppContextProvider = ({ children }) => {
     structuredClone,
     axios,
     fetchProducts,
-    setCartItems,
   };
 
   return (
