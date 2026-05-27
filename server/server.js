@@ -13,13 +13,15 @@ import orderRouter from "./routes/orderRoute.js";
 
 const app = express();
 
-await connectDB();
-await connectCloudinary();
+// Connect to DB and Cloudinary (non-blocking — don't crash on init failure)
+connectDB();
+connectCloudinary();
 
 const allowedOrigins = [
     'http://localhost:5173',
-    'http://localhost:5174'
-];
+    'http://localhost:5174',
+    process.env.FRONTEND_URL,  // Add your Vercel frontend URL in env vars
+].filter(Boolean);
 
 // Middleware
 app.use((req, res, next) => {
@@ -32,7 +34,14 @@ app.use((req, res, next) => {
 
 app.use(cookieParser());
 app.use(cors({
-    origin: allowedOrigins,
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps, Postman, curl)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.includes(origin)) {
+            return callback(null, true);
+        }
+        return callback(new Error('Not allowed by CORS'));
+    },
     credentials: true
 }));
 
