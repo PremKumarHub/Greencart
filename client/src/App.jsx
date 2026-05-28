@@ -13,6 +13,9 @@ import Cart from './Pages/Cart'
 import AddAdress from './Pages/AddAdress'
 import MyOrders from './Pages/MyOrders'
 import Loading from './Pages/seller/Loading'
+import axios from 'axios';
+
+
 
 // Seller Pages
 import SellerLogin from './components/seller/SellerLogin'
@@ -20,6 +23,9 @@ import SellerLayout from './Pages/seller/SellerLayout'
 import ProductList from './Pages/seller/ProductList'
 import Orders from './Pages/seller/Orders'
 import AddProduct from './Pages/seller/AddProduct' // ✅ MISSING IMPORT FIXED
+
+// Add this line right here 👇
+axios.defaults.withCredentials = true;
 
 function App() {
   const isSellerPath = useLocation().pathname.includes("seller")
