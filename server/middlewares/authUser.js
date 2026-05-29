@@ -33,12 +33,18 @@ export const isAuth = async (req, res) => {
 //Logout user:/api/user/logout
 export const logout = async (req, res) => {
     try {
-        res.clearCookie('token', {
+        const cookieOpts = {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
-            path: '/',
-        });
+        };
+        // Clear cookie at all possible paths to remove any stale cookies
+        res.clearCookie('token', { ...cookieOpts, path: '/' });
+        res.clearCookie('token', { ...cookieOpts, path: '/api' });
+        res.clearCookie('token', { ...cookieOpts, path: '/api/user' });
+        res.clearCookie('token', { ...cookieOpts, path: '/api/user/login' });
+        res.clearCookie('token', { ...cookieOpts, path: '/api/user/register' });
+        res.clearCookie('token', { ...cookieOpts, path: '/api/user/logout' });
         return res.json({ success: true, message: 'Logged out successfully' })
     }
     catch (error) {

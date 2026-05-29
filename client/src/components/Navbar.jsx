@@ -14,18 +14,15 @@ function Navbar() {
             const { data } = await axios.get('/api/user/logout')
             if (data.success) {
                 toast.success(data.message)
-                setUser(null);
-                setCartItems({});
-                navigate('/');
-            }
-            else {
-                toast.error(data.message)
             }
         }
         catch (error) {
             toast.error(error.message)
         }
-
+        // Always clear client state regardless of server response
+        setUser(null);
+        setCartItems({});
+        navigate('/');
     }
     useEffect(() => {
         if (typeof searchQuery === "string" && searchQuery.length > 0) {
