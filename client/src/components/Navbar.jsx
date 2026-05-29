@@ -8,13 +8,14 @@ import axios from 'axios';
 
 function Navbar() {
     const [open, setOpen] = React.useState(false)
-    const { user, setUser, setShowUserLogin, navigate, setSearchQuery, searchQuery, getCartCount } = useAppContext();
+    const { user, setUser, setShowUserLogin, navigate, setSearchQuery, searchQuery, getCartCount, setCartItems } = useAppContext();
     const logout = async () => {
         try {
             const { data } = await axios.get('/api/user/logout')
             if (data.success) {
                 toast.success(data.message)
                 setUser(null);
+                setCartItems({});
                 navigate('/');
             }
             else {
