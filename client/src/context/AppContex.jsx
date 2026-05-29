@@ -20,6 +20,7 @@ export const AppContextProvider = ({ children }) => {
 
   // A simple flag to trigger backend synchronization ONLY on user interactions
   const [isLocalChange, setIsLocalChange] = useState(false);
+  const [authLoading, setAuthLoading] = useState(true);
 
   const fetchSeller = async () => {
     try {
@@ -46,7 +47,8 @@ export const AppContextProvider = ({ children }) => {
     } catch (error) {
       setUser(null);
       setCartItems({});
-      toast.error(error.message);
+    } finally {
+      setAuthLoading(false);
     }
   };
 
@@ -164,6 +166,7 @@ export const AppContextProvider = ({ children }) => {
     structuredClone,
     axios,
     fetchProducts,
+    authLoading
   };
 
   return (

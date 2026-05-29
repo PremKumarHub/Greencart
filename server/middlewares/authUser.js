@@ -35,8 +35,8 @@ export const logout = async (req, res) => {
     try {
         const cookieOpts = {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+            secure: true,
+            sameSite: 'none',
         };
         // Clear cookie at all possible paths to remove any stale cookies
         res.clearCookie('token', { ...cookieOpts, path: '/' });

@@ -8,7 +8,7 @@ import axios from 'axios';
 
 function Navbar() {
     const [open, setOpen] = React.useState(false)
-    const { user, setUser, setShowUserLogin, navigate, setSearchQuery, searchQuery, getCartCount, setCartItems } = useAppContext();
+    const { user, setUser, setShowUserLogin, navigate, setSearchQuery, searchQuery, getCartCount, setCartItems, authLoading } = useAppContext();
     const logout = async () => {
         try {
             const { data } = await axios.get('/api/user/logout')
@@ -61,20 +61,23 @@ function Navbar() {
                     <button className="absolute -top-2 -right-3 text-xs text-white bg-green-500 w-[18px] h-[18px] rounded-full">{getCartCount()}</button>
                 </div>
 
-                {!user ? (<button onClick={() => setShowUserLogin(true)} className="cursor-pointer px-8 py-2 bg-green-500 hover:bg-green-600 transition text-white rounded-full">
-                    Login
-                </button>)
-                    : user && (
-                        <div className='relative group'>
-                            <img src={assets.profile_icon} className='w-10' alt='' />
-                            <ul className='hidden group-hover:block absolute top-10 right-0 bg-white shadow border border-gray-200 py-2.5 w-30 rounded-md text-sm z-40'>
-                                <li onClick={() => navigate("my-orders")} className='p-1.5 px-3 hover:bg-primary/10 cursor-pointer'>
-                                    My Orders
-                                </li >
-                                <li onClick={logout} className='p-1.5 p1-3 hover:bg-primary/10 cursor-pointer'>logout</li>
-                            </ul>
-                        </div>
-                    )}
+                {authLoading ? (
+                    <div className="w-8 h-8 rounded-full bg-gray-200 animate-pulse"></div>
+                ) : !user ? (
+                    <button onClick={() => setShowUserLogin(true)} className="cursor-pointer px-8 py-2 bg-green-500 hover:bg-green-600 transition text-white rounded-full">
+                        Login
+                    </button>
+                ) : user && (
+                    <div className='relative group'>
+                        <img src={assets.profile_icon} className='w-10' alt='' />
+                        <ul className='hidden group-hover:block absolute top-10 right-0 bg-white shadow border border-gray-200 py-2.5 w-30 rounded-md text-sm z-40'>
+                            <li onClick={() => navigate("my-orders")} className='p-1.5 px-3 hover:bg-primary/10 cursor-pointer'>
+                                My Orders
+                            </li >
+                            <li onClick={logout} className='p-1.5 p1-3 hover:bg-primary/10 cursor-pointer'>logout</li>
+                        </ul>
+                    </div>
+                )}
             </div>
             <div className='flex items-center gap-6 sm:hidden'>
                 <div onClick={() => navigate("/cart")} className="relative cursor-pointer">
