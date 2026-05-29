@@ -5,7 +5,8 @@ import Stripe from 'stripe';
 
 export const placeOrderCOD = async (req, res) => {
     try {
-        const { userId, items, amount: incomingAmount, address } = req.body;
+        const userId = req.user.id;
+        const { items, amount: incomingAmount, address } = req.body;
         if (!address || !items || items.length === 0) {
             return res.json({ success: false, message: "Invalid Data" });
         }
@@ -30,6 +31,10 @@ export const placeOrderCOD = async (req, res) => {
             paymentType: "COD",
             isPaid: false
         });
+
+        // Clear user's cart in database
+        await User.findByIdAndUpdate(userId, { cartItems: {} });
+
         res.json({ success: true, message: "Order placed successfully" });
 
     } catch (error) {
@@ -40,7 +45,8 @@ export const placeOrderCOD = async (req, res) => {
 
 export const placeOrderStripe = async (req, res) => {
     try {
-        const { userId, items, amount: incomingAmount, address } = req.body;
+        const userId = req.user.id;
+        const { items, amount: incomingAmount, address } = req.body;
         const {origin} = req.headers;
         if (!address || !items || items.length === 0) {
             return res.json({ success: false, message: "Invalid Data" });
@@ -153,6 +159,13 @@ export const verifyStripeSession = async (req, res) => {
 
         if (payment_status === 'paid') {
             await Order.findByIdAndUpdate(orderId, { isPaid: true });
+            
+            // Also clear cart here in case webhook is delayed
+            const userId = session.metadata?.userId;
+            if (userId) {
+                await User.findByIdAndUpdate(userId, { cartItems: {} });
+            }
+            
             return res.json({ success: true, paid: true, orderId });
         }
 
