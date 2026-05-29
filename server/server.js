@@ -14,7 +14,7 @@ import orderRouter from "./routes/orderRoute.js";
 const app = express();
 
 // Initialize connections
-connectDB();
+await connectDB();
 connectCloudinary();
 
 const allowedOrigins = [
