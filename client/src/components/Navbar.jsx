@@ -62,7 +62,9 @@ function Navbar() {
                 </div>
 
                 {authLoading ? (
-                    <div className="w-8 h-8 rounded-full bg-gray-200 animate-pulse"></div>
+                    <button disabled className="opacity-50 cursor-not-allowed px-8 py-2 bg-green-500 text-white rounded-full">
+                        Login
+                    </button>
                 ) : !user ? (
                     <button onClick={() => setShowUserLogin(true)} className="cursor-pointer px-8 py-2 bg-green-500 hover:bg-green-600 transition text-white rounded-full">
                         Login

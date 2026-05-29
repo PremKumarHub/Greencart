@@ -22,6 +22,8 @@ export const isAuth = async (req, res) => {
         const userId = req.user.id;
         const user = await User.findById(userId).select("-password");
 
+        // Prevent browser from caching auth state
+        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
         return res.json({ success: true, user })
     }
 
@@ -37,14 +39,16 @@ export const logout = async (req, res) => {
             httpOnly: true,
             secure: true,
             sameSite: 'none',
+            path: '/',
         };
-        // Clear cookie at all possible paths to remove any stale cookies
-        res.clearCookie('token', { ...cookieOpts, path: '/' });
+
+        // Aggressively expire the cookie by setting it to empty with a past date
+        res.cookie('token', '', { ...cookieOpts, expires: new Date(0) });
+        
+        // Also clear at common paths for safety
         res.clearCookie('token', { ...cookieOpts, path: '/api' });
         res.clearCookie('token', { ...cookieOpts, path: '/api/user' });
-        res.clearCookie('token', { ...cookieOpts, path: '/api/user/login' });
-        res.clearCookie('token', { ...cookieOpts, path: '/api/user/register' });
-        res.clearCookie('token', { ...cookieOpts, path: '/api/user/logout' });
+
         return res.json({ success: true, message: 'Logged out successfully' })
     }
     catch (error) {
