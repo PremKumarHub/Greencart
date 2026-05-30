@@ -27,7 +27,7 @@ export const register = async (req, res) => {
             maxAge: 7 * 24 * 60 * 60 * 1000,
             path: '/',
         })
-        return res.json({ success: true, user: { _id: user._id, email: user.email, name: user.name } })
+        return res.json({ success: true, message: 'User registered successfully', user: { _id: user._id, email: user.email, name: user.name } })
     }
     catch (error) {
         console.log(error.message);
