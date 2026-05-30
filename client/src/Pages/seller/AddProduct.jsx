@@ -18,7 +18,7 @@ const AddProduct = () => {
         { name: 'Fruits', path: 'fruits' },
         { name: 'Drinks', path: 'drinks' },
         { name: 'Instant', path: 'instant' },
-        { name: 'Diary', path: 'diary' },
+        { name: 'Dairy', path: 'dairy' },
         { name: 'Bakery', path: 'bakery' },
         { name: 'Grains', path: 'grains' }
     ];
