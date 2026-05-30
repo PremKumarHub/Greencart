@@ -95,30 +95,87 @@ function Navbar() {
 
 
             {/* Mobile Menu */}
-            {open && (
+            <div className={`fixed top-0 right-0 bottom-0 overflow-hidden bg-white/95 backdrop-blur-md transition-all z-50 ${open ? 'w-full sm:w-80' : 'w-0'}`}>
+                <div className='flex flex-col text-gray-700 h-full'>
+                    <div onClick={() => setOpen(false)} className='flex items-center gap-4 p-6 cursor-pointer border-b border-gray-100'>
+                        <img className='h-4 rotate-180 opacity-60' src={assets.black_arrow_icon} alt="" />
+                        <p className='font-medium'>Back</p>
+                    </div>
+                    
+                    <div className='flex flex-col py-2'>
+                        <NavLink 
+                            onClick={() => setOpen(false)} 
+                            className={({isActive}) => `py-4 px-8 border-b border-gray-50 flex items-center justify-between transition-colors ${isActive ? 'bg-green-50 text-green-600 font-semibold' : 'hover:bg-gray-50'}`} 
+                            to="/"
+                        >
+                            <span>Home</span>
+                            <img src={assets.arrow_right_icon_colored} className='w-3 opacity-40' alt="" />
+                        </NavLink>
+                        
+                        <NavLink 
+                            onClick={() => setOpen(false)} 
+                            className={({isActive}) => `py-4 px-8 border-b border-gray-50 flex items-center justify-between transition-colors ${isActive ? 'bg-green-50 text-green-600 font-semibold' : 'hover:bg-gray-50'}`} 
+                            to="/Products"
+                        >
+                            <span>All Products</span>
+                            <img src={assets.arrow_right_icon_colored} className='w-3 opacity-40' alt="" />
+                        </NavLink>
+                        
+                        {user && (
+                            <NavLink 
+                                onClick={() => setOpen(false)} 
+                                className={({isActive}) => `py-4 px-8 border-b border-gray-50 flex items-center justify-between transition-colors ${isActive ? 'bg-green-50 text-green-600 font-semibold' : 'hover:bg-gray-50'}`} 
+                                to="/my-orders"
+                            >
+                                <span>My Orders</span>
+                                <img src={assets.arrow_right_icon_colored} className='w-3 opacity-40' alt="" />
+                            </NavLink>
+                        )}
+                        
+                        <NavLink 
+                            onClick={() => setOpen(false)} 
+                            className={({isActive}) => `py-4 px-8 border-b border-gray-50 flex items-center justify-between transition-colors ${isActive ? 'bg-green-50 text-green-600 font-semibold' : 'hover:bg-gray-50'}`} 
+                            to="/contact"
+                        >
+                            <span>Contact</span>
+                            <img src={assets.arrow_right_icon_colored} className='w-3 opacity-40' alt="" />
+                        </NavLink>
+                    </div>
 
-
-                <div className={`${open ? 'flex' : 'hidden'} absolute top-[60px] left-0 w-full bg-white shadow-md py-4 flex-col items-start gap-2 px-5 text-sm md:hidden z-50`}>
-                    <NavLink to="/" onClick={() => setOpen(false)}>Home</NavLink>
-                    <NavLink to="/Products" onClick={() => setOpen(false)}>All  product</NavLink>
-                    {
-                        user &&
-                        <NavLink to="/" onClick={() => setOpen(false)}>My orders</NavLink>
-                    }
-                    <NavLink to="/" onClick={() => setOpen(false)}>Contact</NavLink>
-                    {!user ? (
-
-                        <button className="cursor-pointer px-8 py-2 bg-green-500 hover:bg-green-600 transition text-white rounded-full" onClick={() => {
-                            setOpen(false);
-                            setShowUserLogin(true);
-                        }}> Login </button>
-                    ) : (
-                        <button className="cursor-pointer px-8 py-2 bg-green-500 hover:bg-green-600 transition text-white rounded-full" onClick={logout}> Logout </button>)}
-
-
-
+                    <div className='mt-auto p-8 border-t border-gray-100'>
+                        {!user ? (
+                            <button 
+                                className="w-full py-4 bg-green-500 hover:bg-green-600 text-white rounded-xl font-medium shadow-lg shadow-green-200 transition-all active:scale-95" 
+                                onClick={() => {
+                                    setOpen(false);
+                                    setShowUserLogin(true);
+                                }}
+                            > 
+                                Login 
+                            </button>
+                        ) : (
+                            <div className='flex flex-col gap-4'>
+                                <div className='flex items-center gap-3 p-3 bg-gray-50 rounded-lg'>
+                                    <img src={assets.profile_icon} className='w-10' alt='' />
+                                    <div>
+                                        <p className='text-xs text-gray-500'>Logged in as</p>
+                                        <p className='font-medium text-sm truncate'>{user.name || 'User'}</p>
+                                    </div>
+                                </div>
+                                <button 
+                                    className="w-full py-3 bg-white border border-red-200 text-red-500 hover:bg-red-50 rounded-xl font-medium transition-all" 
+                                    onClick={() => {
+                                        setOpen(false);
+                                        logout();
+                                    }}
+                                > 
+                                    Logout 
+                                </button>
+                            </div>
+                        )}
+                    </div>
                 </div>
-            )}
+            </div>
         </nav>
     )
 }
