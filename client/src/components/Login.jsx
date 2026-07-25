@@ -20,7 +20,7 @@ const Login = () => {
                 setUser(data.user)
                 setShowUserLogin(false)
                 toast.success(data.message)
-            }
+            }   
             else {
                 toast.error(data.message)
             }
