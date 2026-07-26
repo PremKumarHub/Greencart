@@ -66,4 +66,12 @@ app.use((err, req, res, next) => {
     res.status(500).json({ success: false, message: err.message || "Internal Server Error" });
 });
 
+const PORT = process.env.PORT || 4000;
+
+if (process.env.VERCEL !== '1') {
+    app.listen(PORT, () => {
+        console.log(`Server running locally on http://localhost:${PORT}`);
+    });
+}
+
 export default app;
