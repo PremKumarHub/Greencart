@@ -41,10 +41,10 @@ const NewsLetter = () => {
                     placeholder="Enter your email id"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    required
+
                 />
-                <button 
-                    type="submit" 
+                <button
+                    type="submit"
                     disabled={loading}
                     className="md:px-12 px-8 h-full text-white bg-primary hover:bg-primary/90 disabled:opacity-50 transition-all cursor-pointer rounded-md rounded-l-none font-medium flex items-center justify-center whitespace-nowrap"
                 >

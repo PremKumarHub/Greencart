@@ -7,7 +7,7 @@ const ProductCard = ({ product }) => {
     return product && (
         <div
             onClick={() => {
-                navigate(`/products/${product.category.toLowerCase()}/${product._id}`);
+                navigate(`/products/${products.category.toLowerCase()}/${product._id}`);
                 scrollTo(0, 0)
             }}
             className="border border-gray-500/20 rounded-md md:px-4 px-2 py-2 bg-white w-full hover:shadow-sm transition-all"
@@ -37,7 +37,7 @@ const ProductCard = ({ product }) => {
                                 className="flex items-center justify-center gap-1 bg-primary/10 border border-primary/40 w-full md:w-[80px] h-8 md:h-[34px] rounded cursor-pointer text-xs md:text-sm font-medium hover:bg-primary/20 transition"
                                 onClick={() => addtoCart(product._id)}
                             >
-                                <img src={assets.cart_icon} alt="cart icon" className='w-3 md:w-4'/>
+                                <img src={assets.cart_icon} alt="cart icon" className='w-3 md:w-4' />
                                 Add
                             </button>
                         ) : (
